@@ -1,0 +1,105 @@
+<div fxLayout="column" class="testcase root-container">
+   <div fxLayout="column" fxFlex>
+      <mat-toolbar class="main-toolbar" fxFlex="initial">
+         <mat-icon class="form-icon">contact_mail</mat-icon>
+         <span>Foxywedding test case</span>
+      </mat-toolbar>
+      <div fxLayout="column" class="field-area" fxFlex fxLayoutAlign="space-around center">
+             <form [formGroup]="userDataForm">
+             <fieldset class="mat-elevation-z8">
+                    <legend>Vartotojas</legend>
+
+             <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+              <mat-form-field fxFlex="initial" appearance="outline" class="form-field">
+                 <mat-label>Vardas</mat-label>    
+                 <input type="text"  matInput formControlName="name">
+                 <mat-icon matPrefix class="form-icon">person</mat-icon>
+                    <mat-error *ngIf="ctrlHasError(userDataForm,'name','required')">
+                      Reikšmė lauke turi būti nurodyta
+                    </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="initial" appearance="outline" class="form-field">
+                 <mat-label>El. paštas</mat-label>    
+                 <input type="email"  matInput formControlName="email">
+                 <mat-icon matPrefix class="form-icon">email</mat-icon>
+                    <mat-error *ngIf="ctrlHasError(userDataForm,'email','required')">
+                      Reikšmė lauke turi būti nurodyta
+                    </mat-error>
+                    <mat-error *ngIf="ctrlHasError(userDataForm,'email','email')">
+                      Klaidingai įvestas el. pašto adresas
+                    </mat-error>
+                    <mat-error *ngIf="ctrlHasError(userDataForm,'email','existsValue')">
+                      El. pašto adresas jau yra naudojamas
+                    </mat-error>
+              </mat-form-field>
+              </div>
+             <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+              <mat-form-field fxFlex="initial" appearance="outline" class="form-field">
+                 <mat-label>Slaptažodis</mat-label>    
+                 <input type="password"  matInput formControlName="password">
+                 <mat-icon matPrefix class="form-icon">key</mat-icon>
+                    <mat-error *ngIf="ctrlHasError(userDataForm,'password','required')">
+                      Reikšmė lauke turi būti nurodyta
+                    </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="initial" appearance="outline" class="form-field">
+                 <mat-label>Slaptažodis (pakart.)</mat-label>    
+                 <input type="password"  matInput formControlName="retryPassword">
+                 <mat-icon matPrefix class="form-icon">key</mat-icon>
+                    <mat-error *ngIf="ctrlHasError(userDataForm,'retryPassword','required')">
+                      Reikšmė lauke turi būti nurodyta
+                    </mat-error>
+                    <mat-error *ngIf="ctrlHasError(userDataForm,'retryPassword','notMatch')">
+                      Slaptažodžiai turi sutapti
+                    </mat-error>
+
+              </mat-form-field>
+              </div>
+
+
+              </fieldset>            
+             <fieldset class="mat-elevation-z8" formArrayName="friends" >
+                    <legend>Draugai</legend>
+                <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="start center"  *ngFor="let friendForm of friends.controls; let i = index">
+                   <mat-form-field fxFlex="initial" appearance="outline" [formGroupName]="i" class="form-field">
+                   <mat-label>Vardas</mat-label>    
+                     <input type="text"  matInput formControlName="name">
+                     <mat-icon matPrefix class="form-icon">person</mat-icon>
+                        <mat-error *ngIf="ctrlHasError(friendForm,'name','required')">
+                          Reikšmė lauke turi būti nurodyta
+                    </mat-error>
+                   </mat-form-field>
+                   <mat-form-field fxFlex="initial" appearance="outline" [formGroupName]="i" class="form-field">
+                 <mat-label>El. paštas</mat-label>    
+                 <input type="email"  matInput formControlName="email">
+                 <mat-icon matPrefix class="form-icon">email</mat-icon>
+                    <mat-error *ngIf="ctrlHasError(friendForm,'email','required')">
+                      Reikšmė lauke turi būti nurodyta
+                    </mat-error>
+                    <mat-error *ngIf="ctrlHasError(friendForm,'email','email')">
+                      Klaidingai įvestas el. pašto adresas
+                    </mat-error>
+                   </mat-form-field>
+                   <button class="remove-friend" mat-mini-fab (click)="deleteFriend(i)" [disabled]="friends.controls.length==1">
+                       <mat-icon>delete_forever</mat-icon>
+                   </button>
+                </div>
+                <mat-divider class="space-around"></mat-divider>
+                <div align="center">
+                <button color="primary" mat-mini-fab (click)="addFriend()">
+                    <mat-icon>add</mat-icon>
+                </button>
+                </div>
+              </fieldset>
+             </form>
+      </div>
+      <div fxLayout="column" fxFlex="initial">
+         <button mat-raised-button color="primary" (click)="showResult()" [disabled]="userDataForm.invalid">
+            <mat-icon aria-label="next">navigate_next</mat-icon>
+            Testi
+         </button>
+      </div>
+   </div>
+</div>

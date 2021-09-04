@@ -1,0 +1,7 @@
+.testcase.root-container { height:100%; }
+.testcase .form-field { width:400px; margin-right:20px }
+.testcase fieldset { margin-top:20px; }
+.testcase .field-area {overflow:auto; }
+.testcase form { height:100%; }
+.testcase .space-around { margin:10px; }
+.testcase .form-icon { margin-right: 10px }
