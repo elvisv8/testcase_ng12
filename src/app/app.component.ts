@@ -11,6 +11,8 @@ import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/d
 })
 
 export class AppComponent implements OnInit {
+
+  /** Data structure description **/
   userDataForm: FormGroup = this.fb.group ({
       name: ['', [ Validators.required,]],
       email: ['', [ Validators.required, Validators.email, existsValidator(['testas@testas.lt']) ]],
@@ -24,7 +26,7 @@ export class AppComponent implements OnInit {
   constructor(private fb: FormBuilder, public dialog: MatDialog){}
 
   ngOnInit() {
-     /* add one friend by default */
+     /** add one friend by default **/
       this.addFriend();
   }
 
@@ -53,33 +55,12 @@ export class AppComponent implements OnInit {
     return (control && control.hasError(errorName));
  }
 
+/** Show dialog window to display results **/
  showResult() {
    const dialogConfig = new MatDialogConfig();
    dialogConfig.data = JSON.stringify(this.userDataForm.value);
    this.dialog.open(DialogInfo, dialogConfig);
  }
-
-
- getFormErrors(form: AbstractControl | null) {
-    if (form instanceof FormControl) {
-        // Return FormControl errors or null
-        return form.errors ?? null;
-    }
-    if (form instanceof FormGroup) {
-        const groupErrors = form.errors;
-        // Form group can contain errors itself, in that case add'em
-        const formErrors:  { [key: string]: any } = groupErrors ? {groupErrors} : {};
-        Object.keys(form.controls).forEach(key => {
-           const error = this.getFormErrors(form.get(key));
-           if (error !== null) {
-                formErrors[key] = error;
-           }
-        });
-        return Object.keys(formErrors).length > 0 ? formErrors : null;
-    }
-    return null;
-}
-
 }
 
 @Component({
